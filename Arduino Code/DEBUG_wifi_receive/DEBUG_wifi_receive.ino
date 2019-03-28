@@ -12,10 +12,22 @@
 #define SDA 5
 #define LED 12
 
+//char ssid[] = "Francisco Alegria's iPhone 8+";
+//char pass[] = "12341234";
+
+//char ssid[] = "PDEV_MBP_AP";
+//char pass[] = "";
+
 char ssid[] = "CenturyLink9713";
 char pass[] = "4efda8d46777v3";
 
+//char ssid[] = "IASTATE";
+//char pass[] = "";
+
 WiFiUDP Udp;
+//const IPAddress destIpad(172,20,10,2);
+//const IPAddress destIpad(169,254,149,120);
+//const IPAddress destIpad(10,26,42,73); //ipad at isu IASTATE
 const IPAddress destIpad(192,168,0,4); //iPad
 //const IPAddress destIphone(192,168,0,3); //iPhone
 const unsigned int destPort = 9000;
@@ -37,8 +49,11 @@ void setup() {
 // Specify a static IP address for NodeMCU - only needeed for receiving messages)
     // If you erase this line, your ESP8266 will get a dynamic IP address
     WiFi.config(IPAddress(192,168,0,123),IPAddress(192,168,0,4), IPAddress(255,255,255,0)); 
-  
-    // Connect to WiFi network255
+   // WiFi.config(IPAddress(10,12,10,78), IPAddress(10,26,42,73), IPAddress(255,255,248,0)); //IASTATE
+   // WiFi.config(IPAddress(192,168,0,123),IPAddress(169,254,149,120), IPAddress(255,255,0,0));
+    // WiFi.config(IPAddress(192,168,0,123),IPAddress(172,20,10,2), IPAddress(255,255,255,240));
+    
+    // Connect to WiFi network
     Serial.println();
     Serial.print("Connecting to ");
     Serial.println(ssid);
@@ -58,8 +73,8 @@ void setup() {
 //////////////////////////////////////////////////////
 void loop(){
   GUI_IN();
-  //inputContents();
-   delay(5);
+  inputContents();
+   delay(10);
    /*
   OSCBundle msgIN;
   int size;
@@ -100,28 +115,29 @@ void inputContents(){
   }
 }
 /////////////////////////////////////////////////////////
-void sendNodeOSC(char destOSCAdd[], int dataSend){
-  Serial.println("debug:entered sendNodeOSC");
+void send_to_GUI(char destOSCAdd[], int dataSend){
+  //Serial.println("debug:entered sendNodeOSC");
  /* Serial.println(destOSCAdd);
   //Serial.println(charSend);
   Serial.println(dataSend);
   Serial.println(destIpad); // */
-  OSCMessage send2node(destOSCAdd);
-  send2node.add(dataSend);
+  OSCMessage send_GUI(destOSCAdd);
+  send_GUI.add(dataSend);
   Udp.beginPacket(destIpad,destPort);
-  send2node.send(Udp);
+  send_GUI.send(Udp);
   Udp.endPacket();
-  send2node.empty();
+  send_GUI.empty();
 }
 //////////////////////////////////////////////////
 void GUI_IN(){
-  Serial.println("debug:entered gui_in");
+  //Serial.println("debug:entered gui_in");
   OSCMessage gui_in;
   int msgSize;
   if((msgSize = Udp.parsePacket())>0){
     while(msgSize--)
       gui_in.fill(Udp.read());
       if(!gui_in.hasError()){
+        //gui_in.route("/
         gui_in.route("/1/fader",debug_fader);
         gui_in.route("/1/MUTE", mute);
       }
@@ -129,23 +145,23 @@ void GUI_IN(){
 }
 //////////////////////////////////////////////////////
 void mute(OSCMessage &msg, int addrOffset){
-  Serial.println("debug:entered mute");
+  //Serial.println("debug:entered mute");
   LED_val = (boolean) msg.getFloat(0);
-  if(LED_val){
+ /* if(LED_val){
     Serial.print("ON ");
     Serial.println(LED_val);
   }
   else{
     Serial.print("OFF ");
     Serial.println(LED_val);
-  }
+  }*/
   digitalWrite(LED, LED_val);
-  sendNodeOSC("/1/label3", LED_val);
-  delay(5);
+  send_to_GUI("/1/label3", LED_val);
+  delay(10);
 }
 //////////////////////////////////////////////////////////////////
 void debug_fader(OSCMessage &msg, int addrOffset){
-  Serial.println("debug:entered fader");
+ // Serial.println("debug:entered fader");
   float fad_val_new = msg.getFloat(0);
   byte fad_val_b = floor(fad_val_new*255);
   int fad_val_i;
@@ -165,14 +181,14 @@ void debug_fader(OSCMessage &msg, int addrOffset){
       Wire.write(fad_val_b);
       Wire.endTransmission();
     }
-    sendNodeOSC("/1/label", fad_val_i);
+    send_to_GUI("/1/label", fad_val_i);
   }
   else{
     fad_val_old = fad_val_new;
   }
-  Serial.println("Fader input value is: ");
-  Serial.print(fad_val_new);
-  Serial.print(" , ");
-  Serial.print(fad_val_b);
-  delay(5);
+  //Serial.println("Fader input value is: ");
+  //Serial.print(fad_val_new);
+ // Serial.print(" , ");
+  //Serial.print(fad_val_b);
+  delay(10);
 }
