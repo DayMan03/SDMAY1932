@@ -72,7 +72,7 @@
   float pwm2 = 0.5;
   int pwm2val = 50;
   float wave2 = 0;
-  int wave2val = 1;
+  int wave2val = 0;
 
   // lfo 1
   float rate1 = 0;
@@ -80,7 +80,7 @@
   float pwm1lfo = 0.5;
   int pwm1lfoVal = 50;
   float wave3 = 0;
-  int wave3val = 1;
+  int wave3val = 0;
 
   // lfo 2
   float rate2 = 0;
@@ -88,7 +88,7 @@
   float pwm2lfo = 0.5;
   int pwm2lfoVal = 50;
   float wave4 = 0;
-  int wave4val = 1;
+  int wave4val = 0;
   
   // adsr 1
   float adsr11 = 0.0;
@@ -124,7 +124,7 @@
 
   // filters
   float filter = 0;
-  int filterType = 1;
+  int filterType = 0;
   float lpf = 0;
   int lpfVal = 0;
   float hpf = 0;
@@ -132,7 +132,7 @@
 
   // XY touch 'keyboard'
   float XYmode = 0;
-  int XYMp1 = 1;
+  int XYMp1 = 0;
   float XYp1val1x = 0;
   float XYp1val1y = 0;
   float XYp1val2x = 0;
@@ -250,6 +250,7 @@ void setup() {
 void loop() {
   //inputContents();
    GUI_IN();
+   //Serial.printf("note = %d\n", noteIn1);
   delay(1);
 }
 ////////////////////////////////////////////////////
@@ -265,7 +266,7 @@ void GUI_IN(){
       gui_in.fill(Udp.read());
       if(!gui_in.hasError()){
         //gui_in.route("/<page number>/<gui control name>", <function that handles that controls' input>);
-        if( page == 1){
+       // if( page == 1){
         gui_in.route("/1/coarse1", osc1pitchOffset);
         gui_in.route("/1/oct1P", osc1oct);
         gui_in.route("/1/oct1N", osc1oct);
@@ -306,12 +307,14 @@ void GUI_IN(){
         gui_in.route("/1/lpf", lpfFreq);
         gui_in.route("/1/hpf", hpfFreq);
         gui_in.route("/1/XYmode", xymode);
-        gui_in.route("/1/XY/1", xy1);
+        gui_in.route("/1/XY", xy);
+        /*
         gui_in.route("/1/XY/2", xy2);
         gui_in.route("/1/XY/3", xy1);
         gui_in.route("/1/XY/4", xy2);
         gui_in.route("/1/XY/5", xy1);
-       }////////////////////////////////////////////
+        */
+      // }////////////////////////////////////////////
        /*
        if(page == 2){
           gui_in.route("/2/XYleftMode", xylMode);
@@ -328,89 +331,183 @@ void GUI_IN(){
           gui_in.route("/2/XYright/5", xyr1);
        }////////////////////////////////////////////
        */
-       if(page == 2){
-          gui_in.route("/3/modBay/1/1", mb11);
-          gui_in.route("/3/modBay/1/2", mb12);
-          gui_in.route("/3/modBay/1/3", mb13);
-          gui_in.route("/3/modBay/1/4", mb14);
-          gui_in.route("/3/modBay/1/5", mb15);
-          gui_in.route("/3/modBay/1/6", mb16);
-          gui_in.route("/3/modBay/1/7", mb17);
-          gui_in.route("/3/modBay/1/8", mb18);
-          gui_in.route("/3/modBay/1/9", mb19);
-          gui_in.route("/3/modBay/1/10", mb10);
-          gui_in.route("/3/modBay/2/1", mb21);
-          gui_in.route("/3/modBay/2/2", mb22);
-          gui_in.route("/3/modBay/2/3", mb23);
-          gui_in.route("/3/modBay/2/4", mb24);
-          gui_in.route("/3/modBay/2/5", mb25);
-          gui_in.route("/3/modBay/2/6", mb26);
-          gui_in.route("/3/modBay/2/7", mb27);
-          gui_in.route("/3/modBay/2/8", mb28);
-          gui_in.route("/3/modBay/2/9", mb29);
-          gui_in.route("/3/modBay/2/10", mb20);
-          gui_in.route("/3/modBay/3/1", mb31);
-          gui_in.route("/3/modBay/3/2", mb32);
-          gui_in.route("/3/modBay/3/3", mb33);
-          gui_in.route("/3/modBay/3/4", mb34);
-          gui_in.route("/3/modBay/3/5", mb35);
-          gui_in.route("/3/modBay/3/6", mb36);
-          gui_in.route("/3/modBay/3/7", mb37);
-          gui_in.route("/3/modBay/3/8", mb38);
-          gui_in.route("/3/modBay/3/9", mb39);
-          gui_in.route("/3/modBay/3/10", mb30);
-          gui_in.route("/3/modBay/4/1", mb41);
-          gui_in.route("/3/modBay/4/2", mb42);
-          gui_in.route("/3/modBay/4/3", mb43);
-          gui_in.route("/3/modBay/4/4", mb44);
-          gui_in.route("/3/modBay/4/5", mb45);
-          gui_in.route("/3/modBay/4/6", mb46);
-          gui_in.route("/3/modBay/4/7", mb47);
-          gui_in.route("/3/modBay/4/8", mb48);
-          gui_in.route("/3/modBay/4/9", mb49);
-          gui_in.route("/3/modBay/4/10", mb40);
-          gui_in.route("/3/modBay/5/1", mb51);
-          gui_in.route("/3/modBay/5/2", mb52);
-          gui_in.route("/3/modBay/5/3", mb53);
-          gui_in.route("/3/modBay/5/4", mb54);
-          gui_in.route("/3/modBay/5/5", mb55);
-          gui_in.route("/3/modBay/5/6", mb56);
-          gui_in.route("/3/modBay/5/7", mb57);
-          gui_in.route("/3/modBay/5/8", mb58);
-          gui_in.route("/3/modBay/5/9", mb59);
-          gui_in.route("/3/modBay/5/10", mb50);
-          gui_in.route("/3/modBay/6/1", mb61);
-          gui_in.route("/3/modBay/6/2", mb62);
-          gui_in.route("/3/modBay/6/3", mb63);
-          gui_in.route("/3/modBay/6/4", mb64);
-          gui_in.route("/3/modBay/6/5", mb65);
-          gui_in.route("/3/modBay/6/6", mb66);
-          gui_in.route("/3/modBay/6/7", mb67);
-          gui_in.route("/3/modBay/6/8", mb68);
-          gui_in.route("/3/modBay/6/9", mb69);
-          gui_in.route("/3/modBay/6/10", mb60);
-          gui_in.route("/3/modBay/7/1", mb71);
-          gui_in.route("/3/modBay/7/2", mb72);
-          gui_in.route("/3/modBay/7/3", mb73);
-          gui_in.route("/3/modBay/7/4", mb74);
-          gui_in.route("/3/modBay/7/5", mb75);
-          gui_in.route("/3/modBay/7/6", mb76);
-          gui_in.route("/3/modBay/7/7", mb77);
-          gui_in.route("/3/modBay/7/8", mb78);
-          gui_in.route("/3/modBay/7/9", mb79);
-          gui_in.route("/3/modBay/7/10", mb70);
-          gui_in.route("/3/modBay/8/1", mb81);
-          gui_in.route("/3/modBay/8/2", mb82);
-          gui_in.route("/3/modBay/8/3", mb83);
-          gui_in.route("/3/modBay/8/4", mb84);
-          gui_in.route("/3/modBay/8/5", mb85);
-          gui_in.route("/3/modBay/8/6", mb86);
-          gui_in.route("/3/modBay/8/7", mb87);
-          gui_in.route("/3/modBay/8/8", mb88);
-          gui_in.route("/3/modBay/8/9", mb89);
-          gui_in.route("/3/modBay/8/10", mb80);
-       }////////////////////////////////////////////
-       if(page == 3){
+      // if(page == 2){
+          gui_in.route("/2/modBay/1/1", mb11);
+          gui_in.route("/2/modBay/1/2", mb12);
+          gui_in.route("/2/modBay/1/3", mb13);
+          gui_in.route("/2/modBay/1/4", mb14);
+          gui_in.route("/2/modBay/1/5", mb15);
+          gui_in.route("/2/modBay/1/6", mb16);
+          gui_in.route("/2/modBay/1/7", mb17);
+          gui_in.route("/2/modBay/1/8", mb18);
+          gui_in.route("/2/modBay/1/9", mb19);
+          gui_in.route("/2/modBay/1/10", mb10);
+          gui_in.route("/2/modBay/2/1", mb21);
+          gui_in.route("/2/modBay/2/2", mb22);
+          gui_in.route("/2/modBay/2/3", mb23);
+          gui_in.route("/2/modBay/2/4", mb24);
+          gui_in.route("/2/modBay/2/5", mb25);
+          gui_in.route("/2/modBay/2/6", mb26);
+          gui_in.route("/2/modBay/2/7", mb27);
+          gui_in.route("/2/modBay/2/8", mb28);
+          gui_in.route("/2/modBay/2/9", mb29);
+          gui_in.route("/2/modBay/2/10", mb20);
+          gui_in.route("/2/modBay/3/1", mb31);
+          gui_in.route("/2/modBay/3/2", mb32);
+          gui_in.route("/2/modBay/3/3", mb33);
+          gui_in.route("/2/modBay/3/4", mb34);
+          gui_in.route("/2/modBay/3/5", mb35);
+          gui_in.route("/2/modBay/3/6", mb36);
+          gui_in.route("/2/modBay/3/7", mb37);
+          gui_in.route("/2/modBay/3/8", mb38);
+         // gui_in.route("/2/modBay/3/9", mb39);
+          //gui_in.route("/2/modBay/3/10", mb30);
+          gui_in.route("/2/modBay/4/1", mb41);
+          gui_in.route("/2/modBay/4/2", mb42);
+          gui_in.route("/2/modBay/4/3", mb43);
+          gui_in.route("/2/modBay/4/4", mb44);
+          gui_in.route("/2/modBay/4/5", mb45);
+          gui_in.route("/2/modBay/4/6", mb46);
+          gui_in.route("/2/modBay/4/7", mb47);
+          gui_in.route("/2/modBay/4/8", mb48);
+          //gui_in.route("/2/modBay/4/9", mb49);
+          //gui_in.route("/2/modBay/4/10", mb40);
+          gui_in.route("/2/modBay/5/1", mb51);
+          gui_in.route("/2/modBay/5/2", mb52);
+          gui_in.route("/2/modBay/5/3", mb53);
+          gui_in.route("/2/modBay/5/4", mb54);
+          gui_in.route("/2/modBay/5/5", mb55);
+          gui_in.route("/2/modBay/5/6", mb56);
+          gui_in.route("/2/modBay/5/7", mb57);
+          gui_in.route("/2/modBay/5/8", mb58);
+          //gui_in.route("/2/modBay/5/9", mb59);
+         // gui_in.route("/2/modBay/5/10", mb50);
+          gui_in.route("/2/modBay/6/1", mb61);
+          gui_in.route("/2/modBay/6/2", mb62);
+          gui_in.route("/2/modBay/6/3", mb63);
+          gui_in.route("/2/modBay/6/4", mb64);
+          gui_in.route("/2/modBay/6/5", mb65);
+          gui_in.route("/2/modBay/6/6", mb66);
+          gui_in.route("/2/modBay/6/7", mb67);
+          gui_in.route("/2/modBay/6/8", mb68);
+         // gui_in.route("/2/modBay/6/9", mb69);
+         // gui_in.route("/2/modBay/6/10", mb60);
+          gui_in.route("/2/modBay/7/1", mb71);
+          gui_in.route("/2/modBay/7/2", mb72);
+          gui_in.route("/2/modBay/7/3", mb73);
+          gui_in.route("/2/modBay/7/4", mb74);
+          gui_in.route("/2/modBay/7/5", mb75);
+          gui_in.route("/2/modBay/7/6", mb76);
+          gui_in.route("/2/modBay/7/7", mb77);
+          gui_in.route("/2/modBay/7/8", mb78);
+         // gui_in.route("/2/modBay/7/9", mb79);
+         // gui_in.route("/2/modBay/7/10", mb70);
+          gui_in.route("/2/modBay/8/1", mb81);
+          gui_in.route("/2/modBay/8/2", mb82);
+          gui_in.route("/2/modBay/8/3", mb83);
+          gui_in.route("/2/modBay/8/4", mb84);
+          gui_in.route("/2/modBay/8/5", mb85);
+          gui_in.route("/2/modBay/8/6", mb86);
+          gui_in.route("/2/modBay/8/7", mb87);
+          gui_in.route("/2/modBay/8/8", mb88);
+          //gui_in.route("/2/modBay/8/9", mb89);//ignore
+          //gui_in.route("/2/modBay/8/10", mb80);//ignore
+      // }////////////////////////////////////////////
+       //if(page == 3){
+          gui_in.route("/3/36", midi36);
+          gui_in.route("/3/37", midi37);
+          gui_in.route("/3/38", midi38);
+          gui_in.route("/3/39", midi39);
+          gui_in.route("/3/40", midi40);
+          gui_in.route("/3/41", midi41);
+          gui_in.route("/3/42", midi42);
+          gui_in.route("/3/43", midi43);
+          gui_in.route("/3/44", midi44);
+          gui_in.route("/3/45", midi45);
+          gui_in.route("/3/46", midi46);
+          gui_in.route("/3/47", midi47);
+          gui_in.route("/3/48", midi48);
+          gui_in.route("/3/49", midi49);
+          gui_in.route("/3/50", midi50);
+          gui_in.route("/3/51", midi51);
+          gui_in.route("/3/52", midi52);
+          gui_in.route("/3/53", midi53);
+          gui_in.route("/3/54", midi54);
+          gui_in.route("/3/55", midi55);
+          gui_in.route("/3/56", midi56);
+          gui_in.route("/3/57", midi57);
+          gui_in.route("/3/58", midi58);
+          gui_in.route("/3/59", midi59);
+          gui_in.route("/3/60", midi60);
+          gui_in.route("/3/61", midi61);
+          gui_in.route("/3/62", midi62);
+          gui_in.route("/3/63", midi63);
+          gui_in.route("/3/64", midi64);
+          gui_in.route("/3/65", midi65);
+          gui_in.route("/3/66", midi66);
+          gui_in.route("/3/67", midi67);
+          gui_in.route("/3/68", midi68);
+          gui_in.route("/3/69", midi69);
+          gui_in.route("/3/70", midi70);
+          gui_in.route("/3/71", midi71);
+          gui_in.route("/3/72", midi72);
+          gui_in.route("/3/73", midi73);
+          gui_in.route("/3/74", midi74);
+          gui_in.route("/3/75", midi75);
+          gui_in.route("/3/76", midi76);
+          gui_in.route("/3/77", midi77);
+          gui_in.route("/3/78", midi78);
+          gui_in.route("/3/79", midi79);
+          gui_in.route("/3/80", midi80);
+          gui_in.route("/3/81", midi81);
+          gui_in.route("/3/82", midi82);
+          gui_in.route("/3/83", midi83);
+          gui_in.route("/3/84", midi84);
+          gui_in.route("/3/85", midi85);
+          gui_in.route("/3/86", midi86);
+          gui_in.route("/3/87", midi87);
+          gui_in.route("/3/88", midi88);
+       //}///////////////////////////////////////////
+      // if(page == 4){
+          gui_in.route("/4/coarse1", osc1pitchOffset);
+          gui_in.route("/4/oct1P", osc1oct);
+          gui_in.route("/4/oct1N", osc1oct);
+          gui_in.route("/4/pwm1", osc1pwm);
+          gui_in.route("/4/wave1", osc1wave);
+          gui_in.route("/4/coarse2", osc2pitchOffset);
+          gui_in.route("/4/oct2P", osc2oct);
+          gui_in.route("/4/oct2N", osc2oct);
+          gui_in.route("/4/pwm2", osc2pwm);
+          gui_in.route("/4/wave2", osc2wave);
+          gui_in.route("/4/rate1", lfo1rate);
+          gui_in.route("/4/pwm1lfo", lfo1pwm);
+          gui_in.route("/4/wave1lfo", lfo1wave);
+          gui_in.route("/4/rate2", lfo2rate);
+          gui_in.route("/4/pwm2lfo", lfo2pwm);
+          gui_in.route("/4/wave2lfo", lfo2wave);
+          gui_in.route("/4/adsr1/1", adsr1);
+          gui_in.route("/4/adsr1/2", adsr1);
+          gui_in.route("/4/adsr1/3", adsr1);
+          gui_in.route("/4/adsr1/4", adsr1);
+          gui_in.route("/4/adsr2/1", adsr2);
+          gui_in.route("/4/adsr2/2", adsr2);
+          gui_in.route("/4/adsr2/3", adsr2);
+          gui_in.route("/4/adsr2/4", adsr2);
+          gui_in.route("/4/mixer1", mix1);
+          gui_in.route("/4/mixer2", mix2);
+          gui_in.route("/4/mixer3", mix3);
+          gui_in.route("/4/mixer4", mix4);
+          gui_in.route("/4/mixer5", mix5);
+          gui_in.route("/4/mixer6", mix6);
+          gui_in.route("/4/master", outAmp);
+          gui_in.route("/4/mute", muteAll);
+          gui_in.route("/4/hold", holdNote);
+          gui_in.route("/4/save", savePatch);
+          gui_in.route("/4/patchP", changePatch);
+          gui_in.route("/4/patchN", changePatch);
+          gui_in.route("/4/filter", filterSelect);
+          gui_in.route("/4/lpf", lpfFreq);
+          gui_in.route("/4/hpf", hpfFreq);
           gui_in.route("/4/36", midi36);
           gui_in.route("/4/37", midi37);
           gui_in.route("/4/38", midi38);
@@ -436,101 +533,7 @@ void GUI_IN(){
           gui_in.route("/4/58", midi58);
           gui_in.route("/4/59", midi59);
           gui_in.route("/4/60", midi60);
-          gui_in.route("/4/61", midi61);
-          gui_in.route("/4/62", midi62);
-          gui_in.route("/4/63", midi63);
-          gui_in.route("/4/64", midi64);
-          gui_in.route("/4/65", midi65);
-          gui_in.route("/4/66", midi66);
-          gui_in.route("/4/67", midi67);
-          gui_in.route("/4/68", midi68);
-          gui_in.route("/4/69", midi69);
-          gui_in.route("/4/70", midi70);
-          gui_in.route("/4/71", midi71);
-          gui_in.route("/4/72", midi72);
-          gui_in.route("/4/73", midi73);
-          gui_in.route("/4/74", midi74);
-          gui_in.route("/4/75", midi75);
-          gui_in.route("/4/76", midi76);
-          gui_in.route("/4/77", midi77);
-          gui_in.route("/4/78", midi78);
-          gui_in.route("/4/79", midi79);
-          gui_in.route("/4/80", midi80);
-          gui_in.route("/4/81", midi81);
-          gui_in.route("/4/82", midi82);
-          gui_in.route("/4/83", midi83);
-          gui_in.route("/4/84", midi84);
-          gui_in.route("/4/85", midi85);
-          gui_in.route("/4/86", midi86);
-          gui_in.route("/4/87", midi87);
-          gui_in.route("/4/88", midi88);
-       }////////////////////////////////////////////
-       if(page == 4){
-          gui_in.route("/5/coarse1", osc1pitchOffset);
-          gui_in.route("/5/oct1P", osc1oct);
-          gui_in.route("/5/oct1N", osc1oct);
-          gui_in.route("/5/pwm1", osc1pwm);
-          gui_in.route("/5/wave1", osc1wave);
-          gui_in.route("/5/coarse2", osc2pitchOffset);
-          gui_in.route("/5/oct2P", osc2oct);
-          gui_in.route("/5/oct2N", osc2oct);
-          gui_in.route("/5/pwm2", osc2pwm);
-          gui_in.route("/5/wave2", osc2wave);
-          gui_in.route("/5/rate1", lfo1rate);
-          gui_in.route("/5/pwm1lfo", lfo1pwm);
-          gui_in.route("/5/wave1lfo", lfo1wave);
-          gui_in.route("/5/rate2", lfo2rate);
-          gui_in.route("/5/pwm2lfo", lfo2pwm);
-          gui_in.route("/5/wave2lfo", lfo2wave);
-          gui_in.route("/5/adsr1/1", adsr1);
-          gui_in.route("/5/adsr1/2", adsr1);
-          gui_in.route("/5/adsr1/3", adsr1);
-          gui_in.route("/5/adsr1/4", adsr1);
-          gui_in.route("/5/adsr2/1", adsr2);
-          gui_in.route("/5/adsr2/2", adsr2);
-          gui_in.route("/5/adsr2/3", adsr2);
-          gui_in.route("/5/adsr2/4", adsr2);
-          gui_in.route("/5/mixer1", mix1);
-          gui_in.route("/5/mixer2", mix2);
-          gui_in.route("/5/mixer3", mix3);
-          gui_in.route("/5/mixer4", mix4);
-          gui_in.route("/5/mixer5", mix5);
-          gui_in.route("/5/mixer6", mix6);
-          gui_in.route("/5/master", outAmp);
-          gui_in.route("/5/mute", muteAll);
-          gui_in.route("/5/hold", holdNote);
-          gui_in.route("/5/save", savePatch);
-          gui_in.route("/5/patchP", changePatch);
-          gui_in.route("/5/patchN", changePatch);
-          gui_in.route("/5/filter", filterSelect);
-          gui_in.route("/5/lpf", lpfFreq);
-          gui_in.route("/5/hpf", hpfFreq);
-          gui_in.route("/5/36", midi36);
-          gui_in.route("/5/37", midi37);
-          gui_in.route("/5/38", midi38);
-          gui_in.route("/5/39", midi39);
-          gui_in.route("/5/40", midi40);
-          gui_in.route("/5/41", midi41);
-          gui_in.route("/5/42", midi42);
-          gui_in.route("/5/43", midi43);
-          gui_in.route("/5/44", midi44);
-          gui_in.route("/5/45", midi45);
-          gui_in.route("/5/46", midi46);
-          gui_in.route("/5/47", midi47);
-          gui_in.route("/5/48", midi48);
-          gui_in.route("/5/49", midi49);
-          gui_in.route("/5/50", midi50);
-          gui_in.route("/5/51", midi51);
-          gui_in.route("/5/52", midi52);
-          gui_in.route("/5/53", midi53);
-          gui_in.route("/5/54", midi54);
-          gui_in.route("/5/55", midi55);
-          gui_in.route("/5/56", midi56);
-          gui_in.route("/5/57", midi57);
-          gui_in.route("/5/58", midi58);
-          gui_in.route("/5/59", midi59);
-          gui_in.route("/5/60", midi60);
-       }
+       //}
      }
   }
 }
@@ -1168,14 +1171,52 @@ void inputContents(){
  }
 
  ////////////////////////////////////////////////////
- void xy1(OSCMessage &msg, int addrOffset){
-  
+ void xy(OSCMessage &msg, int addrOffset){
+  float xin = msg.getFloat(1);
+  float yin = msg.getFloat(0);
+  int x2note = 0;
+  int y2koct = 0;
+  if (XYMp1 == 0){//two octaves
+    noteOn1 = 0;
+    int x2note = ceil(xin*12);
+    int y2koct = ceil(yin*2);
+    noteIn1 = x2note + 23 + 12*y2koct;
+    noteOn1 = 1;
+    Serial.printf("xy1 in = %f, key = %d, note = %d\n", xin, x2note, noteIn1);
+  Serial.printf("xy1 yin = %f, key octave = %d\n", yin, y2koct);
+  }
+  else if (XYMp1 == 1){//four octaves
+    noteOn1 = 0;
+    int x2note = ceil(xin*12);
+    int y2koct = ceil(yin*4);
+    noteIn1 = x2note + 23 + 12*y2koct;
+    noteOn1 = 1;
+    Serial.printf("xy1 in = %f, key = %d, note = %d\n", xin, x2note, noteIn1);
+  Serial.printf("xy1 yin = %f, key octave = %d\n", yin, y2koct);
+  }
+  else if (XYMp1 == 2){//full range
+    noteOn1 = 0;
+    int x2note = ceil(xin*12);
+    int y2koct = ceil(yin*8);
+    noteIn1 = x2note + 12*y2koct;
+    noteOn1 = 1;
+    Serial.printf("xy1 in = %f, key = %d, note = %d\n", xin, x2note, noteIn1);
+  Serial.printf("xy1 yin = %f, key octave = %d\n", yin, y2koct);
+  }
+  else if (XYMp1 == 3){// x = lpf, y = hpf
+    lpfVal = ceil(xin*100);
+    hpfVal = ceil(yin*100);
+    send_to_GUI(lpflb, int(lpfVal));
+    send_to_GUI(hpflb, int(hpfVal));
+  }
  }
-
+ 
+/*
  ////////////////////////////////////////////////////
  void xy2(OSCMessage &msg, int addrOffset){
   
- }
+}
+ 
  //         TOUCHPAD LEFT        
  ////////////////////////////////////////////////////
  void xylMode(OSCMessage &msg, int addrOffset){
@@ -1207,271 +1248,378 @@ void inputContents(){
  void xyr2(OSCMessage &msg, int addrOffset){
   
  }
+ */
  
  //         KEYS 36-88
  ////////////////////////////////////////////////////
  void midi36(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 36;
+   noteOn1 = keyon;
  }
  
  ////////////////////////////////////////////////////
  void midi37(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 37;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi38(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 38;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi39(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 39;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi40(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 40;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi41(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 41;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi42(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 42;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi43(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 43;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi44(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 44;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi45(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 45;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi46(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 46;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi47(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 47;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi48(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 48;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi49(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 49;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi50(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 50;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi51(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 51;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi52(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 52;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi53(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 53;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi54(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 54;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi55(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 55;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi56(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 56;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi57(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 57;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi58(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 58;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi59(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 59;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi60(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 60;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi61(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 61;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi62(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 62;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi63(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 63;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi64(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 64;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi65(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 65;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi66(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 66;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi67(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 67;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi68(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 68;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi69(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 69;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi70(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 70;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi71(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 71;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi72(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 72;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi73(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 73;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi74(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 74;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi75(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 75;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi76(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 76;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi77(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 77;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi78(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 78;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi79(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 79;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi80(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 80;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi81(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 81;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi82(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 82;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi83(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 83;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi84(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 84;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi85(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 85;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi86(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 86;
+   noteOn1 = keyon;
  }
 
  ////////////////////////////////////////////////////
  void midi87(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 87;
+   noteOn1 = keyon;
  } 
  
  ////////////////////////////////////////////////////
  void midi88(OSCMessage &msg, int addrOffset){
-  
+  float keyon = msg.getFloat(0);
+   noteIn1 = 88;
+   noteOn1 = keyon;
  }
 
  //         MODBAY  
@@ -1617,12 +1765,12 @@ void inputContents(){
 
  ////////////////////////////////////////////////////
  void mb39(OSCMessage &msg, int addrOffset){
-  
+  //ignore
  }
 
  ////////////////////////////////////////////////////
  void mb30(OSCMessage &msg, int addrOffset){
-  
+  //ignore
  }
 
  ////////////////////////////////////////////////////
@@ -1667,12 +1815,12 @@ void inputContents(){
 
  ////////////////////////////////////////////////////
  void mb49(OSCMessage &msg, int addrOffset){
-  
+  //ignore
  }
 
  ////////////////////////////////////////////////////
  void mb40(OSCMessage &msg, int addrOffset){
-  
+  //ignore
  }
 
  ////////////////////////////////////////////////////
@@ -1717,12 +1865,12 @@ void inputContents(){
 
  ////////////////////////////////////////////////////
  void mb59(OSCMessage &msg, int addrOffset){
-  
+  //ignore
  }
 
  ////////////////////////////////////////////////////
  void mb50(OSCMessage &msg, int addrOffset){
-  
+  //ignore
  }
 
  ////////////////////////////////////////////////////
@@ -1767,12 +1915,12 @@ void inputContents(){
 
  ////////////////////////////////////////////////////
  void mb69(OSCMessage &msg, int addrOffset){
-  
+  //ignore
  }
 
  ////////////////////////////////////////////////////
  void mb60(OSCMessage &msg, int addrOffset){
-  
+  //ignore
  }
 
  ////////////////////////////////////////////////////
@@ -1817,12 +1965,12 @@ void inputContents(){
 
  ////////////////////////////////////////////////////
  void mb79(OSCMessage &msg, int addrOffset){
-  
+  //ignore
  }
 
  ////////////////////////////////////////////////////
  void mb70(OSCMessage &msg, int addrOffset){
-  
+  //ignore
  }
 
  ////////////////////////////////////////////////////
@@ -1867,10 +2015,10 @@ void inputContents(){
 
  ////////////////////////////////////////////////////
  void mb89(OSCMessage &msg, int addrOffset){
-  
+  //ignore
  }
 
   ////////////////////////////////////////////////////
  void mb80(OSCMessage &msg, int addrOffset){
-  
+  //ignore
  }
