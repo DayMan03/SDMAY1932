@@ -20,17 +20,17 @@
   int i2cMux = 1;
 ////////////////////////////////////////////////////
 // Wifi Variables 
-  //char ssid[] = "IASTATE";       //iastate network: IASTATE
-  //char pass[] = ""; 
+  char ssid[] = "IASTATE";       //iastate network: IASTATE
+  char pass[] = ""; 
   
-  char ssid[] = "CenturyLink9713"; //paco CR apt
-  char pass[] = "4efda8d46777v3";  
+  //char ssid[] = "CenturyLink9713"; //paco CR apt
+  //char pass[] = "4efda8d46777v3";  
            
 
   WiFiUDP Udp;
   
-  //const IPAddress destIpad(10,26,42,73); //iPad at iastate network: IASTATE
-  const IPAddress destIpad(192,168,0,4); //iPad at paco CR apt
+  const IPAddress destIpad(10,26,40,153); //iPad at iastate network: IASTATE
+  //const IPAddress destIpad(192,168,0,4); //iPad at paco CR apt
   //const IPAddress destIphone(192,168,0,3); //iPhone at paco CR apt
   
   const unsigned int destPort = 9000;   // OSC port ipad receive
@@ -225,8 +225,8 @@ void setup() {
  delay(100);
   //WIFI  
   //WiFi.config(IPAddress(<Node>), IPAddress(<iPad>), IPAddress(<subnet mask>));                   // TEMPLATE 
-   WiFi.config(IPAddress(192,168,0,123),IPAddress(192,168,0,4), IPAddress(255,255,255,0));   //paco CR apt
-   // WiFi.config(IPAddress(10,12,10,78), IPAddress(10,26,42,73), IPAddress(255,255,248,0)); //IASTATE
+   //WiFi.config(IPAddress(192,168,0,123),IPAddress(192,168,0,4), IPAddress(255,255,255,0));   //paco CR apt
+    WiFi.config(IPAddress(10,12,10,185), IPAddress(10,26,40,153), IPAddress(255,255,248,0)); //IASTATE
 
    // Connect to WiFi network
     Serial.println();
