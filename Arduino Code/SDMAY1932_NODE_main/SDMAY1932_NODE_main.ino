@@ -17,7 +17,11 @@
   #define SCL 4
   #define SDA 5
 
+<<<<<<< HEAD
   int i2cMux = 0; //0-3
+=======
+  int i2cMux = 1;
+>>>>>>> 279410d9a5b2f3c97d1bfbe36fb7d6ac3c4a055d
 ////////////////////////////////////////////////////
 // Wifi Variables 
   char ssid[] = "IASTATE";       //iastate network: IASTATE
@@ -997,6 +1001,7 @@ void inputContents(){
   if(mix1new != mixer1){
     mixer1 = mix1new;
   }
+<<<<<<< HEAD
   else{/////////////////////////////////////////////////fix later
    int mix1 = (int) floor(mixer1*255);
    //send to mixer algor
@@ -1006,6 +1011,11 @@ void inputContents(){
 //    Wire.write(0xAF); //talk to port A
 //    Wire.write(dummyval);
 //    Wire.endTransmission();
+=======
+  else{
+   int mix1 = (int) floor(mixer1*100);
+   //send to mixer algor
+>>>>>>> 279410d9a5b2f3c97d1bfbe36fb7d6ac3c4a055d
   }
  }
  
